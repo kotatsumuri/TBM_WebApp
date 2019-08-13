@@ -9,8 +9,12 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "google-maps": "^3.3.0",
+    "google-maps-api-loader": "^1.1.1",
+    "scriptjs": "^2.5.9",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue2-google-maps": "^0.10.7",
     "vuetify": "^2.0.0",
     "vuex": "^3.0.1"
   },

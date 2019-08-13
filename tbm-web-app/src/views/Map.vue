@@ -1,7 +1,19 @@
 <template>
     <div id = "map">
-        this is map
-        <GmapMap style = "width: 100%; height: 100%;">
-        </GmapMap>
+        <TrashBoxMap>
+        </TrashBoxMap>
     </div>
 </template>
+
+<script>
+
+import TrashBoxMap from '../components/TrashBoxMap'
+
+export default {
+    name: 'Map',
+
+    components: {
+        TrashBoxMap,
+    }
+}
+</script>
