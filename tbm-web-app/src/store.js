@@ -17,7 +17,7 @@ export default new Vuex.Store({
   },
   getters: {
     trashBoxDatas(state) {
-      return state.trashBoxDatas;
+      return state.trashBoxDatas
     }
   }
 })

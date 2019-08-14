@@ -1,7 +1,7 @@
 <template>
     <div id = "home">
-        <TrashBoxDataTable>
-        </TrashBoxDataTable>
+        <trash-box-data-table>
+        </trash-box-data-table>
     </div>
 </template>
 

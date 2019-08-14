@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Home from './views/Home'
 import Map from './views/Map'
-import Glaph from './views/Glaph'
+import Graph from './views/Graph'
 
 Vue.use(Router)
 
@@ -21,8 +21,8 @@ export default new Router({
     },
     {
       path: '/glaph',
-      name: 'glaph',
-      component: Glaph
+      name: 'graph',
+      component: Graph
     },
   ]
 })

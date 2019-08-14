@@ -31,7 +31,7 @@ export default {
                 },
                 {
                     text: 'Longitude',
-                    value: 'lon',
+                    value: 'lng',
                 },
                 {
                     text: 'Things',
@@ -50,8 +50,8 @@ export default {
                 let item = {};
                 item.id = key;
                 item.space = rawDatas[key].space;
-                item.lat = rawDatas[key].place.lat;
-                item.lon = rawDatas[key].place.lon;
+                item.lat = rawDatas[key].position.lat;
+                item.lng = rawDatas[key].position.lng;
                 item.things = rawDatas[key].things;
                 computedItems.push(item);
             }

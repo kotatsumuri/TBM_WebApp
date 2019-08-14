@@ -27,9 +27,6 @@ export default {
 
   data () {
     return {
-      database: null,
-      Ref: null,
-      val: {},
     }
   },
 
