@@ -1,6 +1,6 @@
 <template>
     <div id = "trashBoxMap">
-        <div id = "mapping" :style = "{width: mapWidth + 'px',height: mapHeight + 'px'}">
+        <div :id = "makeMapID" :style = "{width: mapWidth + 'px',height: mapHeight + 'px'}">
         </div>
     </div>
 </template>
@@ -34,11 +34,19 @@ export default {
         },
         markerKeys: {
             type: Array,
-            default: () => (['11 45 14 19 19', '19 19 81 01 14'])
+            default: () => (['11 45 14 19 19', '19 19 81 01 11'])
+        },
+        disableDefaultUI: {
+            type: Boolean,
+            default: false,
         },
         popup: {
             type: Boolean,
             default: false,
+        },
+        mapID: {
+            type: String,
+            default: 'map',
         },
     },
 
@@ -71,6 +79,12 @@ export default {
         GoogleMapsLoader.load(this.loadMap);
     },
 
+    computed: {
+        makeMapID: function() {
+            return 'map-' + this.mapID
+        },
+    },
+
     methods: {
         addMarker() {
             this.markerKeys.forEach(key => {
@@ -88,10 +102,11 @@ export default {
 
             this.Google = google;
 
-            this.map = new this.Google.maps.Map(document.getElementById('mapping'),{
+            this.map = new this.Google.maps.Map(document.getElementById(this.makeMapID),{
                 center: this.$store.getters.trashBoxDatas[this.markerKeys[0]].position,
                 zoom: this.zoom,
-                gestureHandling:'greedy'
+                gestureHandling:'greedy',
+                disableDefaultUI: this.disableDefaultUI,
             });
             this.addMarker();
         },
