@@ -2,10 +2,20 @@
     <div id = "trashBoxMap">
         <div :id = "makeMapID" :style = "{width: mapWidth + 'px',height: mapHeight + 'px'}">
         </div>
+        <slot></slot>
+        <v-dialog v-model = "dialog" width = "300" v-if = "popUp">
+            <trash-box-card :trashBoxData = "dialogTrashBoxData" :details = "{ show: true }">
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click = "dialog = false">close</v-btn>
+                </v-card-actions>
+            </trash-box-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
+import TrashBoxCard from './TrashBoxCard'
 
 let GoogleMapsLoader = require('google-maps');
 
@@ -14,6 +24,10 @@ GoogleMapsLoader.LANGUAGE = 'ja';
 
 export default {
     name: 'TrashBoxMap',
+
+    components: {
+        TrashBoxCard,
+    },
 
     props: {
         mapWidth: {
@@ -40,14 +54,14 @@ export default {
             type: Boolean,
             default: false,
         },
-        popup: {
-            type: Boolean,
-            default: false,
-        },
         mapID: {
             type: String,
             default: 'map',
         },
+        popUp: {
+            type: Boolean,
+            default: false,
+        }
     },
 
     data() {
@@ -55,6 +69,8 @@ export default {
             map: null,
             formattedMarkers: [],
             Google: null,
+            dialog: false,
+            dialogTrashBoxData: null,
         }
     },
 
@@ -86,6 +102,12 @@ export default {
     },
 
     methods: {
+
+        trashBoxCardListener() {
+            //this.dialogString = id;
+            this.dialog = true
+        },
+
         addMarker() {
             this.markerKeys.forEach(key => {
                 const markerInfo = this.$store.getters.trashBoxDatas[key];
@@ -94,6 +116,21 @@ export default {
                     map: this.map,
                     animation: this.Google.maps.Animation.DROP
                 });
+                /*
+                const infowindow = new this.Google.maps.InfoWindow({
+                    content: 'a'
+                });
+                marker.addListener('click', function() {
+                    infowindow.open(this.map, marker);
+                });
+                */
+                if(this.popUp){
+                    const _this = this;
+                    marker.addListener('click',function() {
+                    _this.dialogTrashBoxData = {[key]: _this.$store.getters.trashBoxDatas[key]};
+                    _this.dialog = true;
+                    });
+                }
                 this.formattedMarkers.push(marker);
             });
         },

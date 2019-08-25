@@ -6,47 +6,47 @@
                     {{ trashBoxDataKey }}
                 </v-card-title>
             </div>
-                <div class = "position">
-                    <v-card-text>
-                        <div>POSITION</div>
-                        <div class = "text--primary title">
-                            <span>Latitude </span>
-                            {{ trashBoxData[trashBoxDataKey].position.lat }}
-                            <br/>
-                            <span>Longitude </span>
-                            {{ trashBoxData[trashBoxDataKey].position.lng }}
-                        </div>
-                    </v-card-text>
-                    <trash-box-map
-                     v-show = "details.show | details.position"
-                     :mapWidth = "mapWidth"
-                     :mapHeight = "200"
-                     :trashBoxData = "$store.getters.trashBoxDatas"
-                     :markerKeys = "[trashBoxDataKey]"
-                     :disableDefaultUI = "true"
-                     :mapID = "trashBoxDataKey"
-                    >
-                    </trash-box-map>
-                </div>
-                <div class = "space">
-                    <v-card-text>
-                        <div>SPACE</div>
-                        <div class = "text--primary title">
-                            {{ trashBoxData[trashBoxDataKey].space }}%
-                        </div>
-                    </v-card-text>
-                    <trash-box-graph v-show = "details.show | details.graph" :width = "300">
-                    </trash-box-graph>
-                </div>
-                <div class = "things">
-                    <v-card-text>
-                        <div>THINGS</div>
-                        <div class = "text--primary title">
-                            {{ trashBoxDataThings }}
-                        </div>
-                    </v-card-text>
-                </div>
-                <slot></slot>
+            <div class = "position">
+                <v-card-text>
+                    <div>POSITION</div>
+                    <div class = "text--primary title">
+                        <span>Latitude </span>
+                        {{ trashBoxData[trashBoxDataKey].position.lat }}
+                        <br/>
+                        <span>Longitude </span>
+                        {{ trashBoxData[trashBoxDataKey].position.lng }}
+                    </div>
+                </v-card-text>
+                <trash-box-map
+                    v-show = "details.show | details.position"
+                    :mapWidth = "mapWidth"
+                    :mapHeight = "200"
+                    :trashBoxData = "$store.getters.trashBoxDatas"
+                    :markerKeys = "[trashBoxDataKey]"
+                    :disableDefaultUI = "true"
+                    :mapID = "trashBoxDataKey"
+                >
+                </trash-box-map>
+            </div>
+            <div class = "space">
+                <v-card-text>
+                    <div>SPACE</div>
+                    <div class = "text--primary title">
+                        {{ trashBoxData[trashBoxDataKey].space }}%
+                    </div>
+                </v-card-text>
+                <trash-box-graph v-show = "details.show | details.graph" :width = "300">
+                </trash-box-graph>
+            </div>
+            <div class = "things">
+                <v-card-text>
+                    <div>THINGS</div>
+                    <div class = "text--primary title">
+                        {{ trashBoxDataThings }}
+                    </div>
+                </v-card-text>
+            </div>
+            <slot></slot>
         </v-card>
     </div>
 </template>

@@ -1,12 +1,7 @@
 <template>
     <div id = "trashBoxPopUp">
         <v-dialog v-model = "dialog" width = "300">
-            <template v-slot:activator = "{ on }">
-                <v-btn v-on = "on">
-                    click
-                </v-btn>
-            </template>
-            <trash-box-card :details = "details">
+            <trash-box-card :details = "details" :trashBoxData = "trashBoxData">
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn @click = "dialog = false">close</v-btn>
@@ -27,9 +22,28 @@ export default {
         TrashBoxCard,
     },
 
+    props: {
+        dialog: {
+            type: Boolean,
+            default: false
+        },
+        trashBoxData: {
+            type:Object,
+            default: () => ({
+                '11 45 14 19 19': {
+                    position: {
+                        lat: 35.1145114,
+                        lng: 135.191981,
+                    },
+                    space: 81,
+                    things: ['ペットボトル','缶'],
+                }
+            })
+        },
+    },
+
     data() {
         return {
-            dialog: false,
             details: {
                 show: true,
             }

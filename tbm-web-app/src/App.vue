@@ -1,16 +1,20 @@
 <template>
     <div id = "app">
       <v-app>
-        <Header></Header>
+        <!--<Header></Header>-->
         <Body></Body>
-        <router-view />
+        <v-content>
+          <v-container fluid>
+            <router-view/>
+          </v-container>
+        </v-content>
         <Footer></Footer>
       </v-app>
     </div>
 </template>
 
 <script>
-import Header from './components/Header'
+//import Header from './components/Header'
 import Body from './components/Body'
 import Footer from './components/Footer'
 
@@ -20,7 +24,7 @@ export default {
   name: 'App',
 
   components: {
-    Header,
+    //Header,
     Body,
     Footer
   },
