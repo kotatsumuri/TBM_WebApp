@@ -18,13 +18,13 @@
                     </div>
                 </v-card-text>
                 <trash-box-map
-                    v-show = "details.show | details.position"
-                    :mapWidth = "mapWidth"
+                    v-show = "details.show | details.map"
                     :mapHeight = "200"
                     :trashBoxData = "$store.getters.trashBoxDatas"
                     :markerKeys = "[trashBoxDataKey]"
                     :disableDefaultUI = "true"
                     :mapID = "trashBoxDataKey"
+                    :canScroll = "false"
                 >
                 </trash-box-map>
             </div>
@@ -81,7 +81,7 @@ export default {
             type: Object,
             default: () => ({
                 show: false,
-                position: false,
+                map: false,
                 graph: false,
             })
         },
@@ -89,13 +89,10 @@ export default {
 
     data() {
         return {
-            mapWidth: 300,
         }
     },
 
     mounted() {
-        this.mapResize();
-        window.addEventListener('resize',this.mapResize);
     },
 
     computed: {
@@ -109,9 +106,6 @@ export default {
     },
 
     methods: {
-        mapResize: function() {
-            this.mapWidth = document.getElementById('trashBoxCard').clientWidth
-        }
     }
 }
 </script>

@@ -1,19 +1,32 @@
 <template>
     <div id = "map">
-        <trash-box-map
-        :mapWidth = "mapWidth"
-        :mapHeight = "mapHeight"
-        :trashBoxData = "$store.getters.trashBoxDatas"
-        :markerKeys = "Object.keys($store.getters.trashBoxDatas)"
-        >
-        
-        </trash-box-map>
+        <v-container>
+            <v-layout wrap>
+                <v-flex md3>
+                    <trash-box-card class = "card" 
+                     :trashBoxData = "{ [trashBoxKey]: $store.getters.trashBoxDatas[trashBoxKey]}">
+                    </trash-box-card>
+                </v-flex>
+                <v-flex md9>
+                    <v-card class = "card" id = 'mapCard'>
+                        <trash-box-map
+                        @clickMarker = "setTrashBoxInfo"
+                        :mapHeight = "mapHeight"
+                        :trashBoxData = "$store.getters.trashBoxDatas"
+                        :markerKeys = "Object.keys($store.getters.trashBoxDatas)"
+                        >
+                        </trash-box-map>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </v-container>
     </div>
 </template>
 
 <script>
 
 import TrashBoxMap from '../components/TrashBoxMap'
+import TrashBoxCard from '../components/TrashBoxCard'
 
 
 export default {
@@ -21,27 +34,30 @@ export default {
 
     components: {
         TrashBoxMap,
+        TrashBoxCard
     },
 
     data() {
         return {
-            mapWidth: window.innerWidth * 1.0,
-            mapHeight: window.innerHeight * 0.80,
+            mapHeight: 300,
+            trashBoxKey: '11 45 14 19 19',
         }
     },
 
-    created() {
+    mounted() {
+        this.mapResize();
+        window.addEventListener('resize',this.mapResize);
     },
 
     methods: {
-        handleResize: function() {
-            this.mapWidth = window.innerWidth * 1.0;
+        mapResize: function() {
             this.mapHeight = window.innerHeight * 0.80;
+        },
+        setTrashBoxInfo: function(key) {
+            /* eslint-disable */
+            console.log(key);
+            this.trashBoxKey = key;
         }
-    },
-
-    mounted: function() {
-        window.addEventListener('resize', this.handleResize)
     },
 }
 </script>
@@ -49,5 +65,8 @@ export default {
 <style scoped>
 #map {
     margin: 0 auto;
+}
+.card {
+    margin: 10px;
 }
 </style>

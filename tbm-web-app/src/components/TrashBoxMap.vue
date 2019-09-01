@@ -1,39 +1,21 @@
 <template>
-    <div id = "trashBoxMap">
-        <div :id = "makeMapID" :style = "{width: mapWidth + 'px',height: mapHeight + 'px'}">
+    <div class = "trashBoxMap">
+        <div :id = "makeMapID" :style = "{width: auto,height: mapHeight + 'px'}">
         </div>
-        <slot></slot>
-        <v-dialog v-model = "dialog" width = "300" v-if = "popUp">
-            <trash-box-card :trashBoxData = "dialogTrashBoxData" :details = "{ show: true }">
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn @click = "dialog = false">close</v-btn>
-                </v-card-actions>
-            </trash-box-card>
-        </v-dialog>
     </div>
 </template>
 
 <script>
-import TrashBoxCard from './TrashBoxCard'
 
 let GoogleMapsLoader = require('google-maps');
 
-GoogleMapsLoader.KEY = 'AIzaSyD97yR6KcPtBRTQnq4IAb4Az_kkvqVEeyU';
+GoogleMapsLoader.KEY = 'AIzaSyAMeq0DxDop1xBCQZaHBSMtA1S5TmqfIHI';
 GoogleMapsLoader.LANGUAGE = 'ja';
 
 export default {
     name: 'TrashBoxMap',
 
-    components: {
-        TrashBoxCard,
-    },
-
     props: {
-        mapWidth: {
-            type: Number,
-            default: 100,
-        },
         mapHeight: {
             type: Number,
             default: 100,
@@ -58,10 +40,11 @@ export default {
             type: String,
             default: 'map',
         },
-        popUp: {
+        canScroll: {
             type: Boolean,
-            default: false,
-        }
+            default: true,
+        },
+
     },
 
     data() {
@@ -69,8 +52,6 @@ export default {
             map: null,
             formattedMarkers: [],
             Google: null,
-            dialog: false,
-            dialogTrashBoxData: null,
         }
     },
 
@@ -97,17 +78,13 @@ export default {
 
     computed: {
         makeMapID: function() {
+            if(this.map === 'map')
+                return 'map-' + Math.random().toString(36).slice(-8) 
             return 'map-' + this.mapID
         },
     },
 
     methods: {
-
-        trashBoxCardListener() {
-            //this.dialogString = id;
-            this.dialog = true
-        },
-
         addMarker() {
             this.markerKeys.forEach(key => {
                 const markerInfo = this.$store.getters.trashBoxDatas[key];
@@ -117,13 +94,6 @@ export default {
                     animation: this.Google.maps.Animation.DROP
                 });
                 /*
-                const infowindow = new this.Google.maps.InfoWindow({
-                    content: 'a'
-                });
-                marker.addListener('click', function() {
-                    infowindow.open(this.map, marker);
-                });
-                */
                 if(this.popUp){
                     const _this = this;
                     marker.addListener('click',function() {
@@ -131,6 +101,11 @@ export default {
                     _this.dialog = true;
                     });
                 }
+                */
+               const _this = this;
+               marker.addListener('click',function() {
+                   _this.$emit('clickMarker',key)
+               });
                 this.formattedMarkers.push(marker);
             });
         },
@@ -139,10 +114,14 @@ export default {
 
             this.Google = google;
 
+            let scrollOption = 'greedy';
+            if(!this.canScroll)
+                scrollOption = 'none';
+
             this.map = new this.Google.maps.Map(document.getElementById(this.makeMapID),{
                 center: this.$store.getters.trashBoxDatas[this.markerKeys[0]].position,
                 zoom: this.zoom,
-                gestureHandling:'greedy',
+                gestureHandling:scrollOption,
                 disableDefaultUI: this.disableDefaultUI,
             });
             this.addMarker();
