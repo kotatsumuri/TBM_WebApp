@@ -43,7 +43,7 @@ export default {
             items: [
                 {id: 0, title: 'Home', url: '/', iconClass: 'fas fa-home'},
                 {id: 1, title: 'Map', url: '/map', iconClass: 'fas fa-map'},
-                {id: 2, title: 'Glaph',url: '/glaph', iconClass: 'fas fa-chart-area'}
+                {id: 2, title: 'Graph',url: '/graph', iconClass: 'fas fa-chart-area'}
             ],
             tabActive: null,
             drawer: false,

@@ -1,6 +1,6 @@
 <template>
     <div id = "app">
-      <v-app>
+      <v-app v-if = "$store.getters.rdbLoaded" >
         <!--<Header></Header>-->
         <Body></Body>
         <v-content>
@@ -35,9 +35,16 @@ export default {
   },
 
   created: function() {
-    firebase.database().ref('datas/').on('value',snapshot => {
-      this.$store.commit('setTrashBoxDatas',snapshot.val());
-    });
+    try {
+      firebase.database().ref('datas/').on('value',snapshot => {
+        this.$store.commit('setTrashBoxDatas',snapshot.val());
+      });
+      this.$store.commit('finishLoad');
+    }
+    catch(e) {
+      /* eslint-disable */
+      console.error(e)
+    }
   },
 }
 </script>

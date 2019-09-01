@@ -20,7 +20,7 @@ export default new Router({
       component: Map
     },
     {
-      path: '/glaph',
+      path: '/graph',
       name: 'graph',
       component: Graph
     },

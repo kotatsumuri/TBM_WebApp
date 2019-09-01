@@ -1,6 +1,6 @@
 <template>
-    <div id = "trashBoxGraph">
-        <vue-apex-charts widht = "width" type = "area" :options = "options" :series = "series" >
+    <div id = "trashBoxGraph" >
+        <vue-apex-charts :height = "height" type = "area" :options = "options" :series = "series" >
         </vue-apex-charts>
     </div>
 </template>
@@ -17,9 +17,9 @@ export default {
     },
 
     props: {
-        width: {
+        height: {
             type: Number,
-            default: null,
+            default: 300,
         },
         options: {
             type: Object,
@@ -31,7 +31,7 @@ export default {
                         },
                     },
                     xaxis:{
-                        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+                        type: 'datetime'
                     },
                 }
             )
@@ -40,13 +40,17 @@ export default {
             type: Array,
             default: () => ([
                 {
-                    name: 'series-1',
-                    data: [30,40,45,50,49,60,70,10],
+                    name: '11 45 14 19 19',
+                    data:[[1145141919810, 30],
+                          [1145141919811, 31],
+                          [1145141919812, 32],
+                          [1145141919813, 33],
+                          [1145141919814, 34],
+                          [1145141919815, 35],
+                          [1145141919816, 36],
+                          [1145141919817, 37]
+                         ]
                 },
-                {
-                    name: 'series-2',
-                    data: [30,40,5,50,49,60,70,10],
-                }
             ]),
         },
     },
