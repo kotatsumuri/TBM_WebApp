@@ -50,6 +50,9 @@ export default new Vuex.Store({
       });
       return logs;
     },
+    matchTrashBoxLog(state, getters) {
+      return key => getters.trashBoxLogs.find((v) => v.name === key)
+    },
     rdbLoaded(state) {
       return state.rdbLoaded
     },

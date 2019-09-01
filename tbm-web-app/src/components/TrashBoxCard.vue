@@ -35,7 +35,7 @@
                         {{ trashBoxData[trashBoxDataKey].space }}%
                     </div>
                 </v-card-text>
-                <trash-box-graph v-show = "details.show | details.graph" :width = "300">
+                <trash-box-graph :series = "[$store.getters.matchTrashBoxLog(trashBoxDataKey),]" v-show = "details.show | details.graph" :height = "200">
                 </trash-box-graph>
             </div>
             <div class = "things">

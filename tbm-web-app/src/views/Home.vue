@@ -8,7 +8,7 @@
                     <trash-box-card
                      class = "card"
                      :trashBoxData = "{ [trashBoxKey]: $store.getters.trashBoxDatas[trashBoxKey]}"
-                     :details = "{ map : true }">
+                     :details = "{ show : true }">
                     </trash-box-card>
                 </v-flex>
             </v-layout>
