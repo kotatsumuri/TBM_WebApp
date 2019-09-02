@@ -32,9 +32,12 @@ export default {
                     },
                     xaxis:{
                         type: 'datetime',
-                        labels: {show: true},
+                        labels: {
+                            show: true,
+                            format: 'HH:mm'
+                        },
                         axisBorder: {show: true},
-                        axisTicks: {show: true}
+                        axisTicks: {show: true},
                     },
                     yaxis: {
                         labels: {
@@ -46,6 +49,12 @@ export default {
                     grid: {
                         show:true,
                         borderColor: '#aaaaaa'
+                    },
+                    tooltip: {
+                        enabled: true,
+                        x: {
+                            format: 'HH:mm'
+                        }
                     }
                 }
             )
@@ -120,6 +129,7 @@ export default {
             this.options.xaxis.labels.show = false;
             this.options.xaxis.axisBorder.show = false;
             this.options.xaxis.axisTicks.show = false;
+            this.options.tooltip.enabled = false;
         }
     }
 }
