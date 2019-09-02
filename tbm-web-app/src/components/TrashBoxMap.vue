@@ -1,13 +1,14 @@
 <template>
     <div class = "trashBoxMap">
-        <div :id = "makeMapID" :style = "{width: auto,height: mapHeight + 'px'}">
-        </div>
+        <div
+         :id = "makeMapID"
+         :style = "{ width: auto, height: mapHeight + 'px'}"
+        />
     </div>
 </template>
 
 <script>
-
-let GoogleMapsLoader = require('google-maps');
+const GoogleMapsLoader = require('google-maps');
 
 GoogleMapsLoader.KEY = 'AIzaSyAMeq0DxDop1xBCQZaHBSMtA1S5TmqfIHI';
 GoogleMapsLoader.LANGUAGE = 'ja';
@@ -16,6 +17,14 @@ export default {
     name: 'TrashBoxMap',
 
     props: {
+        mapID: {
+            type: String,
+            default: 'map',
+        },
+        markerKeys: {
+            type: Array,
+            default: null,
+        },
         mapHeight: {
             type: Number,
             default: 100,
@@ -24,90 +33,74 @@ export default {
             type: Number,
             default: 15,
         },
-        trashBoxData: {
-            type: Object,
-            default: () => ({}),
-        },
-        markerKeys: {
-            type: Array,
-            default: () => (['11 45 14 19 19', '19 19 81 01 11'])
-        },
         disableDefaultUI: {
             type: Boolean,
             default: false,
-        },
-        mapID: {
-            type: String,
-            default: 'map',
         },
         canScroll: {
             type: Boolean,
             default: true,
         },
-
     },
 
-    data() {
+    data: function () {
         return {
             map: null,
-            formattedMarkers: [],
             Google: null,
+            formattedMarkers: [],
         }
     },
 
     watch: {
-        trashBoxData(newVal, oldVal){
+        '$store.getters.trashBoxDatas': function (newVal, oldVal) {
             this.formattedMarkers.forEach(marker => {
                 marker.setMap(null);
             });
 
             this.formattedMarkers.splice(0, this.formattedMarkers.length);
 
-            if(oldVal == null){
+            if(oldVal == null)
                 GoogleMapsLoader.load(this.loadMap);
-            }
-            else {
+            else
                 this.addMarker();
-            }
         }
     },
 
-    mounted() {
+    mounted: function () {
         GoogleMapsLoader.load(this.loadMap);
     },
 
     computed: {
-        makeMapID: function() {
+        makeMapID: function () {
             if(this.map === 'map')
-                return 'map-' + Math.random().toString(36).slice(-8) 
-            return 'map-' + this.mapID
+                return 'map-' + Math.random().toString(36).slice(-8);
+            return 'map-' + this.mapID;
         },
     },
 
     methods: {
-        addMarker() {
+        addMarker: function () {
             this.markerKeys.forEach(key => {
-                const markerInfo = this.$store.getters.trashBoxDatas[key];
                 const marker = new this.Google.maps.Marker({
-                    position: markerInfo.position,
+                    position: this.$store.getters.trashBoxDatas[key].position,
                     map: this.map,
                     animation: this.Google.maps.Animation.DROP
                 });
-               const _this = this;
-               marker.addListener('click',function() {
-                   _this.$emit('clickMarker',key)
-               });
+
+                const _this = this;
+
+                marker.addListener('click',function() {
+                    _this.$emit('clickMarker',key)
+                });
+
                 this.formattedMarkers.push(marker);
             });
         },
 
         loadMap(google) {
-
             this.Google = google;
 
-            let scrollOption = 'greedy';
-            if(!this.canScroll)
-                scrollOption = 'none';
+            const scrollOption = (this.canScroll ? 'greedy' : 'none');
 
             this.map = new this.Google.maps.Map(document.getElementById(this.makeMapID),{
                 center: this.$store.getters.trashBoxDatas[this.markerKeys[0]].position,
@@ -115,9 +108,9 @@ export default {
                 gestureHandling:scrollOption,
                 disableDefaultUI: this.disableDefaultUI,
             });
+
             this.addMarker();
         },
     },
-
 }
 </script>

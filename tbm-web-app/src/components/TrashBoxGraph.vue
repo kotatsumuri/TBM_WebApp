@@ -1,12 +1,15 @@
 <template>
     <div id = "trashBoxGraph" >
-        <vue-apex-charts :height = "height" type = "line" :options = "options" :series = "series" >
-        </vue-apex-charts>
+        <vue-apex-charts
+         type = "line" 
+         :height = "height"
+         :options = "options" 
+         :series = "series"
+        />
     </div>
 </template>
 
 <script>
-
 import VueApexCharts from 'vue-apexcharts'
 
 export default {
@@ -17,66 +20,15 @@ export default {
     },
 
     props: {
+        series: {
+            type: Array,
+            default: null,
+        },
         height: {
             type: Number,
             default: 300,
         },
-        propOptions: {
-            type: Object,
-            default: () => ({
-                    chart: {
-                        id: 'vuechart-example',
-                        toolbar: {
-                            show: false,
-                        },
-                    },
-                    xaxis:{
-                        type: 'datetime',
-                        labels: {
-                            show: true,
-                            format: 'HH:mm'
-                        },
-                        axisBorder: {show: true},
-                        axisTicks: {show: true},
-                    },
-                    yaxis: {
-                        labels: {
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        }
-                    },
-                    grid: {
-                        show:true,
-                        borderColor: '#aaaaaa'
-                    },
-                    tooltip: {
-                        enabled: true,
-                        x: {
-                            format: 'HH:mm'
-                        }
-                    }
-                }
-            )
-        },
-        series: {
-            type: Array,
-            default: () => ([
-                {
-                    name: '11 45 14 19 19',
-                    data:[[1145141919810, 30],
-                          [1145141919811, 31],
-                          [1145141919812, 32],
-                          [1145141919813, 33],
-                          [1145141919814, 34],
-                          [1145141919815, 35],
-                          [1145141919816, 36],
-                          [1145141919817, 37]
-                         ]
-                },
-            ]),
-        },
-        isDark: {
+        dark: {
             type: Boolean,
             default: false
         },
@@ -86,46 +38,86 @@ export default {
         }
     },
 
-    data() {
+    data: function () {
         return {
-            options: null,
+            options: {
+                chart: {
+                    id: 'vuechart-example',
+                    toolbar: {
+                        show: false,
+                    },
+                },
+                xaxis:{
+                    type: 'datetime',
+                    labels: {
+                        show: true,
+                        format: 'HH:mm'
+                    },
+                    axisBorder: {
+                        show: true
+                    },
+                    axisTicks: {
+                        show: true
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            color: '#FFFFFF'
+                        }
+                    }
+                },
+                grid: {
+                    show:true,
+                    borderColor: '#aaaaaa'
+                },
+                tooltip: {
+                    enabled: true,
+                    x: {
+                        format: 'HH:mm'
+                    }
+                }
+            },
         }
     },
 
     watch: {
-        isDark(newVal) {
-            this.changeStyle(newVal);
+        dark: function (newVal) {
+            if(newVal)
+                this.darkStyle();
+            else
+                this.lightStyle();
         }
     },
 
-    mounted() {
-        this.options = this.propOptions;
-        this.changeStyle(this.isDark);
+    created: function () {
+        if(this.dark)
+            this.darkStyle();
+        else
+            this.lightStyle();
 
         if(this.mini)
-            this.toMini();
+            this.miniStyle();
     },
 
     methods: {
-        changeStyle:function(isDark) {
-            if(isDark){
-                this.options.yaxis.labels.style.color = '#FFFFFF';
-                this.options.grid.borderColor = '#dddddd';
+        darkStyle: function () {
+            this.options.yaxis.labels.style.color = '#FFFFFF';
+            this.options.grid.borderColor = '#dddddd';
 
-                if(this.mini){
-                    this.options.colors = ['#FFFFFF']
-                }
-            }
-            else{
-                this.options.yaxis.labels.style.color = '#000000';
-                this.options.grid.borderColor = '#aaaaaa'
-
-                if(this.mini){
-                    this.options.colors = ['#000000']
-                }
-            }
+            if(this.mini)
+                this.options.colors = ['#FFFFFF'];
         },
-        toMini: function() {
+
+        lightStyle: function () {
+            this.options.yaxis.labels.style.color = '#000000';
+            this.options.grid.borderColor = '#aaaaaa';
+
+            if(this.mini)
+                this.options.colors = ['#000000'];
+        },
+
+        miniStyle: function () {
             this.options.xaxis.labels.show = false;
             this.options.xaxis.axisBorder.show = false;
             this.options.xaxis.axisTicks.show = false;

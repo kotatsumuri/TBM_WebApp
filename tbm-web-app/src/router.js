@@ -8,21 +8,21 @@ import Graph from './views/Graph'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/map',
-      name: 'map',
-      component: Map
-    },
-    {
-      path: '/graph',
-      name: 'graph',
-      component: Graph
-    },
-  ]
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: Home
+        },
+        {
+            path: '/map',
+            name: 'map',
+            component: Map
+        },
+        {
+            path: '/graph',
+            name: 'graph',
+            component: Graph
+        },
+    ]
 })

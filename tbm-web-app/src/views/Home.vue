@@ -3,13 +3,14 @@
         <v-container>
             <v-layout wrap>
                 <v-flex xs12 sm4 md3
-                v-for = "trashBoxKey in Object.keys($store.getters.trashBoxDatas)"
-                :key = "trashBoxKey">
+                 v-for = "trashBoxDataKey in $store.getters.trashBoxDataKeys"
+                 :key = "trashBoxDataKey"
+                >
                     <trash-box-card
                      class = "card"
-                     :trashBoxData = "{ [trashBoxKey]: $store.getters.trashBoxDatas[trashBoxKey]}"
-                     :details = "{ show : true }">
-                    </trash-box-card>
+                     :trashBoxDataKey = "trashBoxDataKey"
+                     :details = "{ show : true }"
+                    />
                 </v-flex>
             </v-layout>
         </v-container>
@@ -24,12 +25,6 @@ export default {
 
     components: {
         TrashBoxCard,
-    },
-
-    data (){
-        return {
-
-        }
     },
 }
 </script>

@@ -3,19 +3,22 @@
         <v-container>
             <v-layout wrap>
                 <v-flex xs12 sm3 md3>
-                    <trash-box-card class = "card" 
-                     :trashBoxData = "{ [trashBoxKey]: $store.getters.trashBoxDatas[trashBoxKey]}">
-                    </trash-box-card>
+                    <trash-box-card 
+                     class = "card" 
+                     :trashBoxDataKey = "trashBoxKey"
+                    />
                 </v-flex>
                 <v-flex xs12 sm9 md9>
-                    <v-card class = "card" id = 'mapCard'>
+                    <v-card 
+                     class = "card" 
+                     id = 'mapCard'
+                    >
                         <trash-box-map
-                        @clickMarker = "setTrashBoxInfo"
-                        :mapHeight = "mapHeight"
-                        :trashBoxData = "$store.getters.trashBoxDatas"
-                        :markerKeys = "Object.keys($store.getters.trashBoxDatas)"
-                        >
-                        </trash-box-map>
+                         @clickMarker = "setTrashBoxInfo"
+                         :mapHeight = "mapHeight"
+                         :trashBoxData = "$store.getters.trashBoxDatas"
+                         :markerKeys = "Object.keys($store.getters.trashBoxDatas)"
+                        />
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -24,10 +27,8 @@
 </template>
 
 <script>
-
 import TrashBoxMap from '../components/TrashBoxMap'
 import TrashBoxCard from '../components/TrashBoxCard'
-
 
 export default {
     name: 'Map',
@@ -37,25 +38,24 @@ export default {
         TrashBoxCard
     },
 
-    data() {
+    data: function () {
         return {
             mapHeight: 300,
             trashBoxKey: '11 45 14 19 19',
         }
     },
 
-    mounted() {
+    mounted: function () {
         this.mapResize();
         window.addEventListener('resize',this.mapResize);
     },
 
     methods: {
-        mapResize: function() {
+        mapResize: function () {
             this.mapHeight = window.innerHeight * 0.80;
         },
-        setTrashBoxInfo: function(key) {
-            /* eslint-disable */
-            console.log(key);
+        
+        setTrashBoxInfo: function (key) {
             this.trashBoxKey = key;
         }
     },

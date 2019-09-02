@@ -1,11 +1,10 @@
 <template>
     <div id = "trashBoxDataTable">
         <v-data-table
-        :headers = "headers"
-        :items = "items"
-        :items-per-page = "5"
-        >
-        </v-data-table>
+         :headers = "headers"
+         :items = "items"
+         :items-per-page = "5"
+        />
     </div>
 </template>
 

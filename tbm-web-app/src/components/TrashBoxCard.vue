@@ -1,6 +1,9 @@
 <template>
     <div id = "trashBoxCard">
-        <v-card :color = "cardColor" :dark = "isDark">
+        <v-card 
+         :color = "backgroundColor" 
+         :dark = "dark"
+        >
             <div class = "id">
                 <v-card-title  primary-title>
                     {{ trashBoxDataKey }}
@@ -11,37 +14,35 @@
                     <div>場所</div>
                     <div class = "title">
                         <span>緯度</span>
-                        {{ trashBoxData[trashBoxDataKey].position.lat }}
+                        {{ $store.getters.trashBoxDatas[trashBoxDataKey].position.lat }}
                         <br/>
                         <span>経度</span>
-                        {{ trashBoxData[trashBoxDataKey].position.lng }}
+                        {{ $store.getters.trashBoxDatas[trashBoxDataKey].position.lng }}
                     </div>
                 </v-card-text>
                 <trash-box-map
-                    v-show = "details.show | details.map"
-                    :mapHeight = "200"
-                    :trashBoxData = "$store.getters.trashBoxDatas"
-                    :markerKeys = "[trashBoxDataKey]"
-                    :disableDefaultUI = "true"
-                    :mapID = "trashBoxDataKey"
-                    :canScroll = "false"
-                >
-                </trash-box-map>
+                 v-show = "details.show | details.map"
+                 :mapID = "trashBoxDataKey"
+                 :markerKeys = "[trashBoxDataKey]"
+                 :mapHeight = "200"
+                 :disableDefaultUI = "true"
+                 :canScroll = "false"
+                />
             </div>
             <div class = "space">
                 <v-card-text>
                     <div>空き容量</div>
                     <div class = "title">
-                        {{ trashBoxData[trashBoxDataKey].space }}%
+                        {{ $store.getters.trashBoxDatas[trashBoxDataKey].space }}%
                     </div>
                 </v-card-text>
                 <trash-box-graph
-                 :series = "[$store.getters.matchTrashBoxLog(trashBoxDataKey),]" 
                  v-show = "details.show | details.graph" 
+                 :series = "[$store.getters.matchTrashBoxLog(trashBoxDataKey),]" 
                  :height = "200"
-                 :isDark = "isDark"
-                 :mini = "true">
-                </trash-box-graph>
+                 :dark = "dark"
+                 :mini = "true"
+                />
             </div>
             <div class = "things">
                 <v-card-text>
@@ -51,7 +52,6 @@
                     </div>
                 </v-card-text>
             </div>
-            <slot></slot>
         </v-card>
     </div>
 </template>
@@ -69,18 +69,9 @@ export default {
     },
 
     props: {
-        trashBoxData: {
-            type: Object,
-            default: () => ({
-                '11 45 14 19 19': {
-                    position: {
-                        lat: 35.1145114,
-                        lng: 135.191981,
-                    },
-                    space: 81,
-                    things: ['ペットボトル','缶'],
-                }
-            })
+        trashBoxDataKey: {
+            type: String,
+            default: null
         },
         details: {
             type: Object,
@@ -92,38 +83,18 @@ export default {
         },
     },
 
-    data() {
-        return {
-        }
-    },
-
-    mounted() {
-    },
-
     computed: {
-        trashBoxDataKey: function() {
-            return Object.keys(this.trashBoxData)[0]
+        trashBoxDataThings: function () {
+            return this.$store.getters.trashBoxDatas[this.trashBoxDataKey].things.join(' ')
         },
 
-        trashBoxDataThings: function() {
-            return this.trashBoxData[this.trashBoxDataKey].things.join(' ')
+        backgroundColor: function () {
+            return '#FF' + ( '00' + parseInt((100 - this.$store.getters.trashBoxDatas[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
         },
 
-        cardColor: function() {
-            return '#FF' + ( '00' + parseInt((100 - this.trashBoxData[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
-        },
-
-        isDark: function() {
-            if(this.trashBoxData[this.trashBoxDataKey].space < 50)
-                return false
-            return true
+        dark: function () {
+            return !(this.$store.getters.trashBoxDatas[this.trashBoxDataKey].space < 50)
         },
     },
-
-    methods: {
-    }
 }
 </script>
-
-<style scoped>
-</style>
