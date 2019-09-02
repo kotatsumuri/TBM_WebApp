@@ -52,7 +52,7 @@ export default {
     },
 
     watch: {
-        '$store.getters.trashBoxDatas': function (newVal, oldVal) {
+        '$store.getters.perfectTrashBoxDatas': function (newVal, oldVal) {
             this.formattedMarkers.forEach(marker => {
                 marker.setMap(null);
             });
@@ -82,7 +82,7 @@ export default {
         addMarker: function () {
             this.markerKeys.forEach(key => {
                 const marker = new this.Google.maps.Marker({
-                    position: this.$store.getters.trashBoxDatas[key].position,
+                    position: this.$store.getters.perfectTrashBoxDatas[key].position,
                     map: this.map,
                     animation: this.Google.maps.Animation.DROP
                 });
@@ -103,7 +103,7 @@ export default {
             const scrollOption = (this.canScroll ? 'greedy' : 'none');
 
             this.map = new this.Google.maps.Map(document.getElementById(this.makeMapID),{
-                center: this.$store.getters.trashBoxDatas[this.markerKeys[0]].position,
+                center: this.$store.getters.perfectTrashBoxDatas[this.markerKeys[0]].position,
                 zoom: this.zoom,
                 gestureHandling:scrollOption,
                 disableDefaultUI: this.disableDefaultUI,

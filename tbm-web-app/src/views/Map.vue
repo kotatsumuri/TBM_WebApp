@@ -16,8 +16,8 @@
                         <trash-box-map
                          @clickMarker = "setTrashBoxInfo"
                          :mapHeight = "mapHeight"
-                         :trashBoxData = "$store.getters.trashBoxDatas"
-                         :markerKeys = "Object.keys($store.getters.trashBoxDatas)"
+                         :trashBoxData = "$store.getters.perfectTrashBoxDatas"
+                         :markerKeys = "Object.keys($store.getters.perfectTrashBoxDatas)"
                         />
                     </v-card>
                 </v-flex>

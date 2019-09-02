@@ -41,13 +41,22 @@ export default new Vuex.Store({
             return state.trashBoxDatas
         },
 
-        trashBoxLogs: function (state) {
+        perfectTrashBoxDatas: function (state,getters) {
+            let returnObject = {};
+            Object.keys(getters.trashBoxDatas).forEach(key => {
+                if(getters.existLogData(key) && getters.existPositionData(key) && getters.existSpaceData(key) && getters.existThingsData(key))
+                    returnObject[key] = getters.trashBoxDatas[key];
+            })
+            return returnObject;
+        },
+
+        trashBoxLogs: function (state,getters) {
             let logs = [];
 
-            Object.keys(state.trashBoxDatas).forEach(key => {
+            Object.keys(getters.perfectTrashBoxDatas).forEach(key => {
                 const data = {
                     name: key,
-                    data: state.trashBoxDatas[key].log,
+                    data: getters.perfectTrashBoxDatas[key].log,
                 };
                 logs.push(data);
             });
@@ -56,7 +65,25 @@ export default new Vuex.Store({
         },
 
         trashBoxDataKeys: function (state, getters) {
-            return Object.keys(getters.trashBoxDatas)
+            return Object.keys(getters.perfectTrashBoxDatas)
+        },
+
+        existLogData: function (state, getters) {
+            return trashBoxDataKey => getters.trashBoxDatas[trashBoxDataKey].log != undefined
+        },
+
+        existSpaceData: function (state, getters) {
+            return trashBoxDataKey => getters.trashBoxDatas[trashBoxDataKey].space != undefined
+        },
+
+        existPositionData: function (state, getters) {
+            return trashBoxDataKey => (getters.trashBoxDatas[trashBoxDataKey].position != undefined &&
+                                       getters.trashBoxDatas[trashBoxDataKey].position.lng != undefined &&
+                                       getters.trashBoxDatas[trashBoxDataKey].position.lat != undefined)
+        },
+
+        existThingsData : function (state, getters) {
+            return trashBoxDataKey => getters.trashBoxDatas[trashBoxDataKey].things != undefined 
         },
 
         matchTrashBoxLog: function (state, getters) {

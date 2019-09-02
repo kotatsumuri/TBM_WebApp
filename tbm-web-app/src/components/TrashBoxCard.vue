@@ -14,10 +14,10 @@
                     <div>場所</div>
                     <div class = "title">
                         <span>緯度</span>
-                        {{ $store.getters.trashBoxDatas[trashBoxDataKey].position.lat }}
+                        {{ $store.getters.perfectTrashBoxDatas[trashBoxDataKey].position.lat }}
                         <br/>
                         <span>経度</span>
-                        {{ $store.getters.trashBoxDatas[trashBoxDataKey].position.lng }}
+                        {{ $store.getters.perfectTrashBoxDatas[trashBoxDataKey].position.lng }}
                     </div>
                 </v-card-text>
                 <trash-box-map
@@ -33,7 +33,7 @@
                 <v-card-text>
                     <div>空き容量</div>
                     <div class = "title">
-                        {{ $store.getters.trashBoxDatas[trashBoxDataKey].space }}%
+                        {{ $store.getters.perfectTrashBoxDatas[trashBoxDataKey].space }}%
                     </div>
                 </v-card-text>
                 <trash-box-graph
@@ -85,15 +85,15 @@ export default {
 
     computed: {
         trashBoxDataThings: function () {
-            return this.$store.getters.trashBoxDatas[this.trashBoxDataKey].things.join(' ')
+            return this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].things.join(' ')
         },
 
         backgroundColor: function () {
-            return '#FF' + ( '00' + parseInt((100 - this.$store.getters.trashBoxDatas[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
+            return '#FF' + ( '00' + parseInt((100 - this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
         },
 
         dark: function () {
-            return !(this.$store.getters.trashBoxDatas[this.trashBoxDataKey].space < 50)
+            return !(this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].space < 50)
         },
     },
 }
