@@ -46,6 +46,9 @@ export default {
                     toolbar: {
                         show: false,
                     },
+                    animations: {
+                        enabled: false
+                    }
                 },
                 xaxis:{
                     type: 'datetime',
