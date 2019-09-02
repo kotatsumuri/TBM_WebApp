@@ -2,7 +2,7 @@
     <div id = "app">
       <v-app v-if = "$store.getters.rdbLoaded" >
         <!--<Header></Header>-->
-        <Body></Body>
+        <Body id = "body"></Body>
         <v-content>
           <v-container fluid>
             <router-view/>
@@ -46,5 +46,10 @@ export default {
       console.error(e)
     }
   },
+
+  mounted: function() {
+    
+  }
+
 }
 </script>

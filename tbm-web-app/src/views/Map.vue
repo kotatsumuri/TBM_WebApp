@@ -2,12 +2,12 @@
     <div id = "map">
         <v-container>
             <v-layout wrap>
-                <v-flex md3>
+                <v-flex xs12 sm3 md3>
                     <trash-box-card class = "card" 
                      :trashBoxData = "{ [trashBoxKey]: $store.getters.trashBoxDatas[trashBoxKey]}">
                     </trash-box-card>
                 </v-flex>
-                <v-flex md9>
+                <v-flex xs12 sm9 md9>
                     <v-card class = "card" id = 'mapCard'>
                         <trash-box-map
                         @clickMarker = "setTrashBoxInfo"

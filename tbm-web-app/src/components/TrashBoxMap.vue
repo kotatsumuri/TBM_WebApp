@@ -93,15 +93,6 @@ export default {
                     map: this.map,
                     animation: this.Google.maps.Animation.DROP
                 });
-                /*
-                if(this.popUp){
-                    const _this = this;
-                    marker.addListener('click',function() {
-                    _this.dialogTrashBoxData = {[key]: _this.$store.getters.trashBoxDatas[key]};
-                    _this.dialog = true;
-                    });
-                }
-                */
                const _this = this;
                marker.addListener('click',function() {
                    _this.$emit('clickMarker',key)

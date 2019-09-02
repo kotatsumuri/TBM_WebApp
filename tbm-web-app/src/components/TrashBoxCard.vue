@@ -1,6 +1,6 @@
 <template>
     <div id = "trashBoxCard">
-        <v-card>
+        <v-card :color = "cardColor" :dark = "isDark">
             <div class = "id">
                 <v-card-title  primary-title>
                     {{ trashBoxDataKey }}
@@ -8,12 +8,12 @@
             </div>
             <div class = "position">
                 <v-card-text>
-                    <div>POSITION</div>
-                    <div class = "text--primary title">
-                        <span>Latitude </span>
+                    <div>場所</div>
+                    <div class = "title">
+                        <span>緯度</span>
                         {{ trashBoxData[trashBoxDataKey].position.lat }}
                         <br/>
-                        <span>Longitude </span>
+                        <span>経度</span>
                         {{ trashBoxData[trashBoxDataKey].position.lng }}
                     </div>
                 </v-card-text>
@@ -30,18 +30,23 @@
             </div>
             <div class = "space">
                 <v-card-text>
-                    <div>SPACE</div>
-                    <div class = "text--primary title">
+                    <div>空き容量</div>
+                    <div class = "title">
                         {{ trashBoxData[trashBoxDataKey].space }}%
                     </div>
                 </v-card-text>
-                <trash-box-graph :series = "[$store.getters.matchTrashBoxLog(trashBoxDataKey),]" v-show = "details.show | details.graph" :height = "200">
+                <trash-box-graph
+                 :series = "[$store.getters.matchTrashBoxLog(trashBoxDataKey),]" 
+                 v-show = "details.show | details.graph" 
+                 :height = "200"
+                 :isDark = "isDark"
+                 :mini = "true">
                 </trash-box-graph>
             </div>
             <div class = "things">
                 <v-card-text>
-                    <div>THINGS</div>
-                    <div class = "text--primary title">
+                    <div>捨てられるもの</div>
+                    <div class = "title">
                         {{ trashBoxDataThings }}
                     </div>
                 </v-card-text>
@@ -102,6 +107,16 @@ export default {
 
         trashBoxDataThings: function() {
             return this.trashBoxData[this.trashBoxDataKey].things.join(' ')
+        },
+
+        cardColor: function() {
+            return '#FF' + ( '00' + parseInt((100 - this.trashBoxData[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
+        },
+
+        isDark: function() {
+            if(this.trashBoxData[this.trashBoxDataKey].space < 50)
+                return false
+            return true
         },
     },
 

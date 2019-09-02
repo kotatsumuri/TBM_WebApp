@@ -1,6 +1,6 @@
 <template>
     <div id = "trashBoxGraph" >
-        <vue-apex-charts :height = "height" type = "area" :options = "options" :series = "series" >
+        <vue-apex-charts :height = "height" type = "line" :options = "options" :series = "series" >
         </vue-apex-charts>
     </div>
 </template>
@@ -21,7 +21,7 @@ export default {
             type: Number,
             default: 300,
         },
-        options: {
+        propOptions: {
             type: Object,
             default: () => ({
                     chart: {
@@ -31,8 +31,22 @@ export default {
                         },
                     },
                     xaxis:{
-                        type: 'datetime'
+                        type: 'datetime',
+                        labels: {show: true},
+                        axisBorder: {show: true},
+                        axisTicks: {show: true}
                     },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                    },
+                    grid: {
+                        show:true,
+                        borderColor: '#aaaaaa'
+                    }
                 }
             )
         },
@@ -53,11 +67,60 @@ export default {
                 },
             ]),
         },
+        isDark: {
+            type: Boolean,
+            default: false
+        },
+        mini: {
+            type: Boolean,
+            default: false
+        }
     },
 
     data() {
         return {
+            options: null,
         }
     },
+
+    watch: {
+        isDark(newVal) {
+            this.changeStyle(newVal);
+        }
+    },
+
+    mounted() {
+        this.options = this.propOptions;
+        this.changeStyle(this.isDark);
+
+        if(this.mini)
+            this.toMini();
+    },
+
+    methods: {
+        changeStyle:function(isDark) {
+            if(isDark){
+                this.options.yaxis.labels.style.color = '#FFFFFF';
+                this.options.grid.borderColor = '#dddddd';
+
+                if(this.mini){
+                    this.options.colors = ['#FFFFFF']
+                }
+            }
+            else{
+                this.options.yaxis.labels.style.color = '#000000';
+                this.options.grid.borderColor = '#aaaaaa'
+
+                if(this.mini){
+                    this.options.colors = ['#000000']
+                }
+            }
+        },
+        toMini: function() {
+            this.options.xaxis.labels.show = false;
+            this.options.xaxis.axisBorder.show = false;
+            this.options.xaxis.axisTicks.show = false;
+        }
+    }
 }
 </script>

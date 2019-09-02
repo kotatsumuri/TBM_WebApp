@@ -13,20 +13,16 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <trash-box-pop-up>
-        </trash-box-pop-up>
     </div>
 </template>
 
 <script>
-import TrashBoxPopUp from '../components/TrashBoxPopUp'
 import TrashBoxCard from '../components/TrashBoxCard'
 
 export default {
     name : 'Home',
 
     components: {
-        TrashBoxPopUp,
         TrashBoxCard,
     },
 
