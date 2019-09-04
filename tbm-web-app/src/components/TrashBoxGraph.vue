@@ -40,7 +40,32 @@ export default {
 
     data: function () {
         return {
-            options: {
+            
+        }
+    },
+
+    watch: {
+        dark: function (newVal) {
+            if(newVal)
+                this.darkStyle();
+            else
+                this.lightStyle();
+        }
+    },
+
+    created: function () {
+        if(this.dark)
+            this.darkStyle();
+        else
+            this.lightStyle();
+
+        if(this.mini)
+            this.miniStyle();
+    },
+
+    computed: {
+        options: function () {
+            const returnOptions = {
                 chart: {
                     id: 'vuechart-example',
                     toolbar: {
@@ -80,52 +105,32 @@ export default {
                         format: 'HH:mm'
                     }
                 }
-            },
+            };
+
+            if(this.dark){
+                returnOptions.yaxis.labels.style.color = '#FFFFFF';
+                returnOptions.grid.borderColor = '#dddddd';
+
+                if(this.mini)
+                    returnOptions.colors = ['#FFFFFF'];
+            }
+            else{
+                returnOptions.yaxis.labels.style.color = '#000000';
+                returnOptions.grid.borderColor = '#aaaaaa';
+
+                if(this.mini)
+                    returnOptions.colors = ['#000000'];
+            }
+
+            if(this.mini){
+                returnOptions.xaxis.labels.show = false;
+                returnOptions.xaxis.axisBorder.show = false;
+                returnOptions.xaxis.axisTicks.show = false;
+                returnOptions.tooltip.enabled = false;
+            }
+
+            return returnOptions;
         }
     },
-
-    watch: {
-        dark: function (newVal) {
-            if(newVal)
-                this.darkStyle();
-            else
-                this.lightStyle();
-        }
-    },
-
-    created: function () {
-        if(this.dark)
-            this.darkStyle();
-        else
-            this.lightStyle();
-
-        if(this.mini)
-            this.miniStyle();
-    },
-
-    methods: {
-        darkStyle: function () {
-            this.options.yaxis.labels.style.color = '#FFFFFF';
-            this.options.grid.borderColor = '#dddddd';
-
-            if(this.mini)
-                this.options.colors = ['#FFFFFF'];
-        },
-
-        lightStyle: function () {
-            this.options.yaxis.labels.style.color = '#000000';
-            this.options.grid.borderColor = '#aaaaaa';
-
-            if(this.mini)
-                this.options.colors = ['#000000'];
-        },
-
-        miniStyle: function () {
-            this.options.xaxis.labels.show = false;
-            this.options.xaxis.axisBorder.show = false;
-            this.options.xaxis.axisTicks.show = false;
-            this.options.tooltip.enabled = false;
-        }
-    }
 }
 </script>
