@@ -52,6 +52,12 @@
                     </div>
                 </v-card-text>
             </div>
+            <v-card-actions>
+                <div class="flex-grow-1"></div>
+                <info-setting-dialog 
+                 :trashBoxDataKey = "trashBoxDataKey">
+                </info-setting-dialog>
+            </v-card-actions>
         </v-card>
     </div>
 </template>
@@ -59,6 +65,7 @@
 <script>
 import TrashBoxGraph from './TrashBoxGraph'
 import TrashBoxMap from './TrashBoxMap'
+import InfoSettingDialog from './InfoSettingDialog'
 
 export default {
     name: 'TrashBoxCard',
@@ -66,6 +73,7 @@ export default {
     components: {
         TrashBoxGraph,
         TrashBoxMap,
+        InfoSettingDialog
     },
 
     props: {

@@ -27,7 +27,6 @@ export default {
                 {id: 0, name: 'Home',   url: '/',        iconClass: 'fas fa-home'},
                 {id: 1, name: 'Map',    url: '/map',     iconClass: 'fas fa-map'},
                 {id: 2, name: 'Graph',  url: '/graph',   iconClass: 'fas fa-chart-area'},
-                {id: 2, name: 'setting',url: '/setting', iconClass: 'fas fa-chart-area'}
             ],
         }
     },

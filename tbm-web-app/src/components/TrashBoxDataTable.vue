@@ -4,7 +4,13 @@
          :headers = "headers"
          :items = "items"
          :items-per-page = "5"
-        />
+        >
+            <template slot = "items" slot-scope="props"> 
+                <td>{{ props.item.id }}</td>
+                <td>{{ props.item.things }}</td>
+                
+            </template>
+        </v-data-table>
     </div>
 </template>
 
@@ -21,21 +27,14 @@ export default {
                     value: 'id',
                 },
                 {
-                    text: 'Space',
-                    value: 'space',
-                },
-                {
-                    text: 'Latitude',
-                    value: 'lat',
-                },
-                {
-                    text: 'Longitude',
-                    value: 'lng',
-                },
-                {
-                    text: 'Things',
+                    text: '捨てられるもの',
                     value: 'things',
                 },
+                {
+                    text: '操作',
+                    value: 'action',
+                    sortable: false
+                }
             ],
         }
     },
@@ -48,9 +47,6 @@ export default {
             for(var key in rawDatas){
                 let item = {};
                 item.id = key;
-                item.space = rawDatas[key].space;
-                item.lat = rawDatas[key].position.lat;
-                item.lng = rawDatas[key].position.lng;
                 item.things = rawDatas[key].things;
                 computedItems.push(item);
             }
