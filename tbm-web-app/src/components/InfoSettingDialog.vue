@@ -76,7 +76,7 @@ export default {
         changeTrashBoxDataThings: function() {
             const updateData = this.$store.getters.trashBoxDatas[this.trashBoxDataKey];
             updateData.things = this.copyTrashBoxDataThings.split(',');
-            firebase.database().ref('datas/' + this.trashBoxDataKey).update(
+            firebase.database().ref('datas/dataList/' + this.trashBoxDataKey).update(
                 updateData
             )
         }

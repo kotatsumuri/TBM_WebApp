@@ -32,7 +32,7 @@ export default {
 
     created: function() {
         try {
-            firebase.database().ref('datas/').on('value',snapshot => {
+            firebase.database().ref('datas/dataList/').on('value',snapshot => {
                 this.$store.commit('setTrashBoxDatas',snapshot.val());
             });
             setTimeout(this.$store.commit, 1000,'finishLoad');
