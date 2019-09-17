@@ -104,7 +104,7 @@ export default {
         },
 
         dark: function () {
-            return !(this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].space < 50)
+            return (this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].space < 50)
         },
     },
 }
