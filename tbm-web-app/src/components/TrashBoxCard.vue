@@ -5,7 +5,8 @@
          :dark = "dark"
         >
             <div class = "id">
-                <v-card-title  primary-title>
+                <v-card-title  primary-title 
+                 v-show = "details.show | details.title">
                     {{ trashBoxDataKey }}
                 </v-card-title>
             </div>
@@ -52,7 +53,7 @@
                     </div>
                 </v-card-text>
             </div>
-            <v-card-actions>
+            <v-card-actions v-if = "details.show | details.setting">
                 <div class="flex-grow-1"></div>
                 <info-setting-dialog 
                  :trashBoxDataKey = "trashBoxDataKey">
@@ -87,6 +88,8 @@ export default {
                 show: false,
                 map: false,
                 graph: false,
+                title: true,
+                setting: true
             })
         },
     },
@@ -97,7 +100,7 @@ export default {
         },
 
         backgroundColor: function () {
-            return '#FF' + ( '00' + parseInt((100 - this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
+            return '#FF' + ( '00' + parseInt((this.$store.getters.perfectTrashBoxDatas[this.trashBoxDataKey].space) * 0.01 * 255).toString(16).toUpperCase()).slice(-2).repeat(2)
         },
 
         dark: function () {

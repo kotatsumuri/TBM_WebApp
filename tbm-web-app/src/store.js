@@ -24,6 +24,7 @@ export default new Vuex.Store({
             }
         },
         rdbLoaded: false,
+        showHeader: true
     },
 
     mutations: {
@@ -33,6 +34,10 @@ export default new Vuex.Store({
 
         finishLoad: function (state) {
             state.rdbLoaded = true;
+        },
+
+        showHeader: function (state, val) {
+            state.showHeader = val
         }
     },
 
@@ -93,5 +98,9 @@ export default new Vuex.Store({
         rdbLoaded: function (state) {
             return state.rdbLoaded
         },
+
+        showHeader: function (state) {
+            return state.showHeader
+        }
     }
 })

@@ -1,6 +1,6 @@
 <template>
     <div id = "pageHeader">
-        <v-app-bar fixed app>
+        <v-app-bar fixed app v-show = "$store.getters.showHeader">
             <v-toolbar-title>TBM</v-toolbar-title>
             <div class = "flex-grow-1"></div>
             <v-toolbar-items>
