@@ -53,16 +53,6 @@ export default {
         }
     },
 
-    created: function () {
-        if(this.dark)
-            this.darkStyle();
-        else
-            this.lightStyle();
-
-        if(this.mini)
-            this.miniStyle();
-    },
-
     computed: {
         options: function () {
             const returnOptions = {

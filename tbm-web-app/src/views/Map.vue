@@ -6,6 +6,7 @@
                     <trash-box-card 
                      class = "card" 
                      :trashBoxDataKey = "trashBoxKey"
+                     :details = "{ graph: true, setting: true, title: true }"
                     />
                 </v-flex>
                 <v-flex xs12 sm9 md9>
@@ -41,7 +42,15 @@ export default {
     data: function () {
         return {
             mapHeight: 300,
-            trashBoxKey: '11 45 14 19 19',
+            trashBoxKey: '01 31 17 e2 53',
+        }
+    },
+
+    watch: {
+        '$store.getters.perfectTrashBoxDatas': function (newVal) {
+            this.trashBoxKey = Object.keys(newVal)[0];
+            /* eslint-disable */
+            console.log(newVal);
         }
     },
 

@@ -31,7 +31,7 @@ export default {
         },
         zoom: {
             type: Number,
-            default: 15,
+            default: 17,
         },
         disableDefaultUI: {
             type: Boolean,
@@ -107,6 +107,7 @@ export default {
                 zoom: this.zoom,
                 gestureHandling:scrollOption,
                 disableDefaultUI: this.disableDefaultUI,
+                mapTypeId: this.Google.maps.MapTypeId.SATELLITE
             });
 
             this.addMarker();
