@@ -16,13 +16,15 @@ export default new Vuex.Store({
                 "things" : [ "設定されていません" ]
               }
         },
+        thingsList: ['燃えるゴミ'],
         rdbLoaded: false,
         showHeader: true
     },
 
     mutations: {
         setTrashBoxDatas: function (state, dataBaseValue) {
-            state.trashBoxDatas = dataBaseValue;
+            state.trashBoxDatas = dataBaseValue.dataList;
+            state.thingsList = dataBaseValue.thingsList;
         },
 
         finishLoad: function (state) {
@@ -37,6 +39,10 @@ export default new Vuex.Store({
     getters: {
         trashBoxDatas: function (state) {
             return state.trashBoxDatas
+        },
+
+        thingsList: function (state) {
+            return state.thingsList
         },
 
         perfectTrashBoxDatas: function (state,getters) {

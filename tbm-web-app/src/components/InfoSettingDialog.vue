@@ -75,10 +75,35 @@ export default {
         },
         changeTrashBoxDataThings: function() {
             const updateData = this.$store.getters.trashBoxDatas[this.trashBoxDataKey];
-            updateData.things = this.copyTrashBoxDataThings.split(',');
+            let thingsList = this.$store.getters.thingsList;
+            const pThings = this.$store.getters.trashBoxDatas[this.trashBoxDataKey].things;
+            pThings.forEach(element => {
+                if(element !== '設定されていません'){
+                    thingsList[element] -= 1;
+                }
+            });
+            if(this.copyTrashBoxDataThings !== ''){
+                updateData.things = this.copyTrashBoxDataThings.split(',');
+                updateData.things.forEach(element => {
+                    if(element !== '設定されていません'){
+                        if(!(thingsList[element])){
+                            thingsList[element] = 1;
+                        }
+                        else {
+                            thingsList[element] += 1;
+                        }
+                    }
+                });
+            }
+            else {
+                updateData.things = ['設定されていません'];
+            }
             firebase.database().ref('datas/dataList/' + this.trashBoxDataKey).update(
                 updateData
-            )
+            );
+            firebase.database().ref('datas/thingsList/').set(
+                thingsList
+            );
         }
     }
 
